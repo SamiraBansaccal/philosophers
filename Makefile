@@ -6,29 +6,31 @@
 #    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 02:22:15 by sbansacc          #+#    #+#              #
-#    Updated: 2024/11/29 02:24:36 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/12/10 06:16:28 by sbansacc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:= philosophers
+NAME		:= philo
 CC			:= gcc
 CFLAGS		:= -Wall -Wextra -Werror -fsanitize=address -g
 SRCDIR		:= src/
 OBJDIR		:= obj/
 LIBFTDIR	:= lib/libft/
-INCLFLAGS	:= -I$(SRCDIR) -I$(LIBFTDIR)
-LDFLAGS		:= -L$(LIBFTDIR) -lft
+PRINTFDIR	:= lib/ft_printf/
+INCLFLAGS	:= -I$(SRCDIR) -I$(LIBFTDIR) -I$(PRINTFDIR)
+LDFLAGS		:= -L$(LIBFTDIR) -lft $(PRINTFDIR)/libftprintf.a
 
-SRC_FILES	:= main.c \
+SRC_FILES	:= main.c init.c philo_routine.c check_death.c\
 
 SRC			:= $(addprefix $(SRCDIR), $(SRC_FILES))
 OBJ			:= $(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 
 LIBFT		:= $(LIBFTDIR)libft.a
+PRINTF		:= $(PRINTFDIR)libftprintf.a
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(OBJ)
+$(NAME): $(LIBFT) $(PRINTF) $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) $(LDFLAGS) -o $@
 	@echo "🚀 Houston, we have a $(NAME)!"
 
@@ -39,6 +41,10 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 $(LIBFT):
 	@echo "🏗️  Building libft..."
 	@$(MAKE) -C $(LIBFTDIR)
+
+$(PRINTF):
+	@echo "🖨️  Building ft_printf..."
+	@$(MAKE) -C $(PRINTFDIR)
 
 clean:
 	@echo "🧹 Cleaning up the mess..."
