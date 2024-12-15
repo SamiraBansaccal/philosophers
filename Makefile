@@ -6,13 +6,13 @@
 #    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 02:22:15 by sbansacc          #+#    #+#              #
-#    Updated: 2024/12/10 06:16:28 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/12/14 21:43:49 by sbansacc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= philo
 CC			:= gcc
-CFLAGS		:= -Wall -Wextra -Werror -fsanitize=address -g
+CFLAGS		:= -Wall -Wextra -Werror -g -fsanitize=thread
 SRCDIR		:= src/
 OBJDIR		:= obj/
 LIBFTDIR	:= lib/libft/
