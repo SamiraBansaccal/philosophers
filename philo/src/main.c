@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/28 22:45:01 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/12/27 03:06:34 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:42:51 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,21 +74,9 @@ void	wait_philos_threads(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		//print_status(&table->philos[i], "DEBUG: waiting for join");
 		pthread_join(table->philos[i].thread, NULL);
-		//print_status(&table->philos[i], "DEBUG: join complete");
 		i++;
 	}
-}
-
-void	start_dinner(t_table *table)
-{
-	table->start_time = get_time();
-	pthread_mutex_lock(&table->table_mutex);
-	table->threads_ready = 1;
-	pthread_mutex_unlock(&table->table_mutex);
-	//print_status(table->philos, "DEBUG: ALL thraeds reay");
-	
 }
 
 void	finish_dinner(t_table *table)
@@ -97,7 +85,6 @@ void	finish_dinner(t_table *table)
 	pthread_mutex_lock(&table->table_mutex);
 	table->dinner_end = 1;
 	pthread_mutex_unlock(&table->table_mutex);
-	//print_status(table->philos, "DEBUG wait monitor");
 	pthread_join(table->monitor_thread, NULL);
 }
 

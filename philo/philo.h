@@ -6,7 +6,7 @@
 /*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 02:15:18 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/12/26 07:15:39 by sabansac         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:44:56 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ void		clean_table(t_table *table);
 
 //#---------------init.c------------------#
 
-long long	ft_atoll(char *num);
 long long	get_time(void);
 int			parse_input(t_table *table, int ac, char **av);
 int			init_table(t_table *table, int ac, char **av);
+
+//#---------------init.c------------------#
+
+long long	ft_atoll(char *num);
+void		start_dinner(t_table *table);
 
 //#--------philo_routine.c---------------#
 

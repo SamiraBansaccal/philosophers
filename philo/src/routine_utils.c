@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   routine_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 05:37:07 by sabansac          #+#    #+#             */
-/*   Updated: 2024/12/27 16:46:13 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/12/27 23:40:22 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,6 @@ void	print_status(t_philo *philo, char *status)
 		printf("%d %d %s\n", time, philo->id, status);
 		pthread_mutex_unlock(&philo->table->print_mutex);
 	}
-	/*else
-	{
-		pthread_mutex_lock(&philo->table->print_mutex);
-		printf("%d %d dinner END OUPSII %s\n", time, philo->id, status);
-		pthread_mutex_unlock(&philo->table->print_mutex);
-	}*/
 }
 
 void	smart_sleep(long long time_to_wait, t_table *table)
@@ -56,6 +50,20 @@ void	smart_sleep(long long time_to_wait, t_table *table)
 		else
 			while (get_time() - start < time_to_wait)
 				;
+	}
+}
+
+void	wait_to_begin(t_table *table)
+{
+	while (1)
+	{
+		pthread_mutex_lock(&table->table_mutex);
+		if (table->threads_ready == 1)
+		{
+			pthread_mutex_unlock(&table->table_mutex);
+			return ;
+		}
+		pthread_mutex_unlock(&table->table_mutex);
 	}
 }
 
