@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+         #
+#    By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/29 02:22:15 by sbansacc          #+#    #+#              #
-#    Updated: 2024/12/14 21:43:49 by sbansacc         ###   ########.fr        #
+#    Updated: 2024/12/26 05:39:27 by sabansac         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ PRINTFDIR	:= lib/ft_printf/
 INCLFLAGS	:= -I$(SRCDIR) -I$(LIBFTDIR) -I$(PRINTFDIR)
 LDFLAGS		:= -L$(LIBFTDIR) -lft $(PRINTFDIR)/libftprintf.a
 
-SRC_FILES	:= main.c init.c philo_routine.c check_death.c\
+SRC_FILES	:= main.c init.c philo_routine.c check_death.c routine_utils.c \
 
 SRC			:= $(addprefix $(SRCDIR), $(SRC_FILES))
 OBJ			:= $(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sbansacc <sbansacc@student.s19.be>         +#+  +:+       +#+        */
+/*   By: sabansac <sabansac@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/29 02:15:18 by sbansacc          #+#    #+#             */
-/*   Updated: 2024/12/14 21:12:33 by sbansacc         ###   ########.fr       */
+/*   Updated: 2024/12/26 07:15:39 by sabansac         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ typedef struct s_philo
 	int				id;
 	long long		last_meal;
 	int				meal_count;
+	int				full;
 	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+	pthread_mutex_t	philo_mutex;
 	struct s_table	*table;
 }	t_philo;
 
@@ -39,12 +41,13 @@ typedef struct s_table
 	long long		time_to_eat;
 	long long		time_to_sleep;
 	int				meals_required;
-	int				someone_died;
-	int				finish_eating;
+	int				dinner_end;
+	int				threads_ready;
 	long long		start_time;
-	pthread_mutex_t	*forks;
+	pthread_t		monitor_thread;
+	pthread_mutex_t	table_mutex;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }	t_table;
 //#---------------main.c------------------#
@@ -61,11 +64,16 @@ int			init_table(t_table *table, int ac, char **av);
 //#--------philo_routine.c---------------#
 
 void		*philo_routine(void *arg);
-void		print_status(t_philo *philo, char *status);
+void		wait_to_begin(t_table *table);
 
+//#--------routine_utils.c---------------#
+
+void		print_status(t_philo *philo, char *status);
+void		smart_sleep(long long time_to_wait, t_table *table);
+int			finish(t_table *table);
 
 //#--------check_death.c---------------#
 
-void		check_death(t_table *table);
+void		*check_death(void *arg);
 
 #endif
